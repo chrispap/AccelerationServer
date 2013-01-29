@@ -52,6 +52,7 @@ public class NetworkBuffer extends Thread {
 	    while (true) {
 		dsocket.receive(packet);
 		String receivedData = new String(buffer, 0, packet.getLength());
+		System.out.println(receivedData);
 		putData(receivedData);
 		packet.setLength(buffer.length);
 	    }
