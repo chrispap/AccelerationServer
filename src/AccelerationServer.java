@@ -1,8 +1,7 @@
 import javax.swing.JFrame;
 
 public class AccelerationServer {
-    // static int PORT = 55832;
-    static int PORT = 45454;
+    static int PORT = 55832;
     static NetworkBuffer networkBuffer;
     static AccelerationPanel accelerationPanel;
     static JFrame win;
@@ -18,15 +17,14 @@ public class AccelerationServer {
      * </ol>
      */
     public static void main(String[] args) {
-	
-	networkBuffer = new NetworkBuffer(PORT);
-	win = new JFrame("Android Accelerometer");
-	accelerationPanel = new AccelerationPanel(networkBuffer.getEntryBuffer());
-	win.setContentPane(accelerationPanel);
-	win.pack();
-	win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	win.setVisible(true);
-	networkBuffer.start();
-	accelerationPanel.startAnimation();
+        win = new JFrame("Android Accelerometer");
+        networkBuffer = new NetworkBuffer(PORT);
+        accelerationPanel = new AccelerationPanel(networkBuffer.getEntryBuffer());
+        win.setContentPane(accelerationPanel);
+        win.pack();
+        win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        win.setVisible(true);
+        networkBuffer.start();
+        accelerationPanel.startAnimation();
     }
 }
