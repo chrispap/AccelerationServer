@@ -84,6 +84,7 @@ public class AccelerationPanel extends JPanel {
             gz.setText("Gz: " + String.format("%+.3f", currentG[2]));
             this.animPanel.repaint();
         } catch (Exception exc) {
+            exc.printStackTrace();
         }
 
     }

@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 
 public class AccelerationServer {
-    static int PORT = 55832;
+    static int PORT = 55888;
     static NetworkBuffer networkBuffer;
     static AccelerationPanel accelerationPanel;
     static JFrame win;
