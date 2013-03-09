@@ -60,7 +60,7 @@ public class NetworkBuffer extends Thread {
             }
 
         } catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
 
         if (dsocket != null) dsocket.close();
