@@ -1,9 +1,11 @@
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,13 +24,13 @@ import javax.swing.Timer;
 public class AccelerationPanel extends JPanel {
     protected static final long serialVersionUID = 1L;
 
-    protected static final int ANIM_INTERVAL = 33;
-    protected JPanel gPanel;
-    protected AnimPanel animPanel;
-    protected JTextField gx, gy, gz;
-    protected Timer animTimer;
-    protected float[] currentG = { 2, 2, 2 };
-    protected float[] sourceG;
+    protected static final int  ANIM_INTERVAL    = 33;
+    protected JPanel            gPanel;
+    protected AnimPanel         animPanel;
+    protected JTextField        gx, gy, gz;
+    protected Timer             animTimer;
+    protected float[]           currentG         = { 2, 2, 2 };
+    protected float[]           sourceG;
 
     /**
      * The constructor takes a reference to the buffer containing the most
@@ -95,18 +97,18 @@ public class AccelerationPanel extends JPanel {
  */
 class AnimPanel extends JPanel {
 
-    protected static final long serialVersionUID = 1L;
-    protected static final int DEFAULT_WIDTH = 600;
-    protected static final int DEFAULT_HEIGHT = 400;
+    protected static final long  serialVersionUID = 1L;
+    protected static final int   DEFAULT_WIDTH    = 600;
+    protected static final int   DEFAULT_HEIGHT   = 400;
     protected static final Color BACKGROUND_COLOR = new Color(0, 0, 0);
-    protected static final Color GRID_COLOR = new Color(0, 255, 0);
-    protected static final Color MARK_COLOR = new Color(255, 0, 0);
+    protected static final Color GRID_COLOR       = new Color(0, 255, 0);
+    protected static final Color MARK_COLOR       = new Color(255, 0, 0);
 
-    protected float[] currentG;
-    protected int width;
-    protected int height;
-    protected Point mark;
-    protected int markRadius = 20;
+    protected float[]            currentG;
+    protected int                width;
+    protected int                height;
+    protected Point              mark;
+    protected int                markRadius       = 8;
 
     public AnimPanel(float[] currentG) {
         this.currentG = currentG;
@@ -123,11 +125,13 @@ class AnimPanel extends JPanel {
 
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paint(Graphics g_) {
+        super.paint(g_);
+        Graphics2D g = (Graphics2D) g_;
 
         // Calculate the position of the mark
-        mark = new Point(width / 2 - (int) (currentG[0] * width / 2), height / 2 + (int) (currentG[1] * height / 2));
+        mark = new Point((int) (-currentG[0] * width / 2), (int) (currentG[1] * height / 2));
+        mark.translate(width / 2, height / 2);
 
         // Draw the Canvas
         g.setColor(GRID_COLOR);
@@ -135,9 +139,11 @@ class AnimPanel extends JPanel {
         g.drawLine(0, height / 2, width, height / 2);
         g.drawOval(width / 2 - 9, height / 2 - 9, 18, 18);
 
-        // Draw the mark
+        // Draw the mark and the line
         g.setColor(MARK_COLOR);
         g.fillOval(mark.x - markRadius, mark.y - markRadius, markRadius << 1, markRadius << 1);
+        g.setStroke(new BasicStroke(4));
+        g.drawLine(width / 2, height / 2, mark.x, mark.y);
 
     }
 }
@@ -145,7 +151,7 @@ class AnimPanel extends JPanel {
 class Logo extends Component {
     private static final long serialVersionUID = 1L;
 
-    BufferedImage img;
+    BufferedImage             img;
 
     public void paint(Graphics g) {
         g.drawImage(img, 0, 0, null);
